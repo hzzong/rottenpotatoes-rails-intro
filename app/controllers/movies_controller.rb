@@ -17,7 +17,7 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.ratings
     @checked_ratings = params[:ratings] || {}
     
-    if !@checked_ratings
+    if !@checked_ratings.any?
       @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
     end
     @movies = Movie.where(rating: @checked_ratings.keys).order(@sort)
