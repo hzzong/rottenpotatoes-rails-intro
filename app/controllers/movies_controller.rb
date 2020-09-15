@@ -16,11 +16,12 @@ class MoviesController < ApplicationController
     @sort = params[:sort]
     #@movies = Movie.all.order(@sort)
     @all_ratings = Movie.ratings
-    @checked_ratings = params[:ratings] || {}
+    @checked_ratings = params[:ratings] || session[:ratings] || {}
     
     if !@checked_ratings.any?
       @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
     end
+    session[:ratings] = @checked_ratings
     @movies = Movie.where(rating: @checked_ratings.keys).order(@sort)
   end
 
